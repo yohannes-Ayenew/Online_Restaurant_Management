@@ -1,0 +1,1 @@
+The Online Restaurant Management System is a comprehensive platform designed to streamline restaurant operations, from order processing to ingredient tracking. It allows restaurant owners, staff, and customers to interact seamlessly, ensuring efficient order management, inventory control, and user administration.
