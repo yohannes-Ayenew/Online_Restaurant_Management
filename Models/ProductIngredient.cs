@@ -1,6 +1,6 @@
 ﻿namespace Online_Restaurant_Management.Models
 {
-    public class ProductIngerdient
+    public class ProductIngredient
     {
         public int ProductId { get; set; }
         public Product Product { get; set; }

@@ -1,4 +1,7 @@
-﻿using Microsoft.Identity.Client;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using Microsoft.Identity.Client;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Online_Restaurant_Management.Models
 {
@@ -10,9 +13,19 @@ namespace Online_Restaurant_Management.Models
         public decimal Price { get; set; }
         public int Stock { get; set; }
         public int CatagoryId { get; set; }
-        public Catagory? Catagory { get; set; }
+
+        [NotMapped]
+        public IFormFile? ImageFile { get; set; }
+        public string ImageUrl { get; set; } = "https://via.placeholder.com/158";
+
+        [ValidateNever]
+        public Category? Catagory { get; set; }
+
+        [ValidateNever]
         public ICollection<OrderItem>? OrderItems { get; set; }
-        public ICollection<ProductIngerdient>? ProductIngerdients { get; set; }
+
+        [ValidateNever]
+        public ICollection<ProductIngredient>? ProductIngerdients { get; set; }
 
     }
 }
