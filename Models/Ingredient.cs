@@ -8,7 +8,7 @@ namespace Online_Restaurant_Management.Models
         public string Name { get; set; }
 
         [ValidateNever]
-        public ICollection<ProductIngredient> ProductIngerdients { get; set; }
+        public ICollection<ProductIngredient> ProductIngredients { get; set; }
 
 
     }

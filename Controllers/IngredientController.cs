@@ -17,5 +17,11 @@ namespace Online_Restaurant_Management.Controllers
         {
             return View(await ingrediants.GetAllAsync());
         }
+
+        public async Task<IActionResult> Details(int id )
+        {
+            return View(await ingrediants.GetByIdAsync(id, new QueryOptions<Ingredient>(){ Includes = "ProductIngredients.Product" }));
+        }
+
     }
 }
