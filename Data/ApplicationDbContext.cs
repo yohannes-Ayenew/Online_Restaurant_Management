@@ -23,9 +23,9 @@ namespace Online_Restaurant_Management.Data
             base.OnModelCreating(modelBuilder);
             //define composite key and relationships for ProductIngredient
             modelBuilder.Entity<Product>()
-                .HasOne(p => p.Catagory)
+                .HasOne(p => p.Category)
                 .WithMany(c => c.Products)
-                .HasForeignKey(p => p.CatagoryId);
+                .HasForeignKey(p => p.CategoryId);
             modelBuilder.Entity<Order>()
                 .HasOne(o => o.User)
                 .WithMany(u => u.Orders)
@@ -62,7 +62,7 @@ namespace Online_Restaurant_Management.Data
                     Description = "a delicious beef taco",
                     Price = 2.5m,
                     Stock = 100,
-                    CatagoryId = 2
+                    CategoryId = 2
                 },
 
             new Product
@@ -72,7 +72,7 @@ namespace Online_Restaurant_Management.Data
                 Description = "a delicious chicken taco",
                 Price = 1.99m,
                 Stock = 101,
-                CatagoryId = 2
+                CategoryId = 2
             },
 
              new Product
@@ -82,7 +82,7 @@ namespace Online_Restaurant_Management.Data
                  Description = "a delicious fish taco",
                  Price = 3.99m,
                  Stock = 90,
-                 CatagoryId = 2
+                 CategoryId = 2
              }
                 ); 
             modelBuilder.Entity<ProductIngredient>().HasData(

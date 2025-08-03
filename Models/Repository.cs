@@ -18,14 +18,17 @@ namespace Online_Restaurant_Management.Models
             _dbset = context.Set<T>();
         }
 
-        public Task AddAsync(T entity)
+        public async Task AddAsync(T entity)
         {
-            throw new NotImplementedException();
+            await _dbset.AddAsync(entity);
+            await _context.SaveChangesAsync();
         }
 
-        public Task DeleteAsync(int id)
+        public async Task DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            T entity = await _dbset.FindAsync(id);
+            _dbset.Remove(entity);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<T>> GetAllAsync()
@@ -54,9 +57,10 @@ namespace Online_Restaurant_Management.Models
         }
         public async Task UpdateAsync(T entity)
         {
-            _dbset.Update(entity);
+            _context.Update(entity);
             await _context.SaveChangesAsync();
         }
+ 
     }
 
 }
