@@ -30,7 +30,7 @@ namespace Online_Restaurant_Management.Models
             _dbset.Remove(entity);
             await _context.SaveChangesAsync();
         }
-
+        
         public async Task<IEnumerable<T>> GetAllAsync()
         {
             return await _dbset.ToListAsync();

@@ -34,12 +34,13 @@ namespace Online_Restaurant_Management.Controllers
         {
             ViewBag.Ingredients = await ingredients.GetAllAsync();
             ViewBag.Categories = await categories.GetAllAsync();
-            if(id == 0)
+            if (id == 0)
             {
                 ViewBag.operation = "Add";
                 return View(new Product());
             }
-            else {
+            else
+            {
                 Product product = await products.GetByIdAsync(id, new QueryOptions<Product>
                 {
                     Includes = "ProductIngredients.Ingredient,Category"
@@ -68,13 +69,13 @@ namespace Online_Restaurant_Management.Controllers
                     product.ImageUrl = uniqueFileName;
                 }
 
-                if( product.ProductId == 0)
+                if (product.ProductId == 0)
                 {
-                    
+
                     product.CategoryId = catId;
 
                     //Add ingredients
-                    foreach(int id in ingredientIds)
+                    foreach (int id in ingredientIds)
                     {
                         product.ProductIngredients?.Add(new ProductIngredient { IngredientId = id, ProductId = product.ProductId });
 
@@ -87,7 +88,7 @@ namespace Online_Restaurant_Management.Controllers
                     var existingProduct = await products.GetByIdAsync(product.ProductId, new QueryOptions<Product> { Includes = "ProductIngredients" });
                     if (existingProduct == null)
                     {
-                        ModelState.AddModelError("","Product is not found.");
+                        ModelState.AddModelError("", "Product is not found.");
                         ViewBag.Ingredients = await ingredients.GetAllAsync();
                         ViewBag.Categories = await categories.GetAllAsync();
                         return View(product);
@@ -125,7 +126,7 @@ namespace Online_Restaurant_Management.Controllers
                     // update produc ingredients
 
                     existingProduct.ProductIngredients?.Clear();
-                    foreach ( int id in ingredientIds)
+                    foreach (int id in ingredientIds)
                     {
                         existingProduct.ProductIngredients?.Add(new ProductIngredient { IngredientId = id, ProductId = product.ProductId });
                     }
@@ -134,17 +135,34 @@ namespace Online_Restaurant_Management.Controllers
                         await products.UpdateAsync(existingProduct);
 
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
-                        ModelState.AddModelError("",$"Error: { ex.GetBaseException().Message}");
+                        ModelState.AddModelError("", $"Error: {ex.GetBaseException().Message}");
                         ViewBag.Ingredients = await ingredients.GetAllAsync();
                         ViewBag.Categories = await categories.GetAllAsync();
                         return View(product);
-                        
+
                     }
                 }
             }
             return RedirectToAction("Index", "product");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                await products.DeleteAsync(id);
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                ModelState.AddModelError("", "Product is not found.");
+                return RedirectToAction("Index");
+            }
+
+
         }
     }
 }
